@@ -1,0 +1,499 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Employee | Employee Management System</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+
+            background:
+                radial-gradient(circle at 10% 20%, #164e63 0%, transparent 35%),
+                radial-gradient(circle at 90% 80%, #134e4a 0%, transparent 35%),
+                linear-gradient(135deg, #020617, #0f172a, #172554);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px 15px;
+        }
+
+        /* Main Container */
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+
+            background: #ffffff;
+
+            border-radius: 22px;
+            overflow: hidden;
+
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+
+            animation: slideUp 0.7s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header */
+
+        .header {
+            background: linear-gradient(
+                125deg,
+                #0f172a,
+                #164e63,
+                #0f766e
+            );
+
+            padding: 35px 20px;
+
+            text-align: center;
+            color: white;
+        }
+
+        .logo {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 15px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 36px;
+
+            background: rgba(255,255,255,0.12);
+
+            border: 1px solid rgba(255,255,255,0.25);
+
+            border-radius: 20px;
+
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            line-height: 1.5;
+        }
+
+        .header p {
+            color: #bae6fd;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            margin-top: 10px;
+        }
+
+        /* Main Content */
+
+        .main-content {
+            padding: 40px 45px;
+        }
+
+        .title-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            display: inline-block;
+
+            background: #ecfeff;
+            color: #0e7490;
+
+            padding: 9px 20px;
+
+            border-radius: 30px;
+            border: 1px solid #a5f3fc;
+
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #0f172a;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* Form Styling */
+
+        form {
+            text-align: left;
+        }
+
+        form p {
+            margin-bottom: 20px;
+        }
+
+        form p label {
+            display: block;
+
+            color: #334155;
+            font-size: 13px;
+            font-weight: 700;
+
+            margin-bottom: 9px;
+        }
+
+        input:not([type="submit"]):not([type="checkbox"]),
+        select,
+        textarea {
+            width: 100%;
+
+            padding: 13px 15px;
+
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+
+            background: #f8fafc;
+            color: #0f172a;
+
+            font-family: inherit;
+            font-size: 14px;
+
+            outline: none;
+
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #0d9488;
+
+            background: #ffffff;
+
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.12);
+        }
+
+        input:hover,
+        select:hover,
+        textarea:hover {
+            border-color: #0d9488;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        input[type="checkbox"] {
+            accent-color: #0d9488;
+            margin-right: 8px;
+        }
+
+        /* Submit Button */
+
+        input[type="submit"] {
+            display: block;
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: linear-gradient(
+                135deg,
+                #0d9488,
+                #0891b2
+            );
+
+            color: white;
+
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow: 0 8px 20px rgba(13, 148, 136, 0.25);
+
+            transition: all 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            transform: translateY(-4px);
+
+            box-shadow: 0 12px 25px rgba(13, 148, 136, 0.4);
+        }
+
+        input[type="submit"]:active {
+            transform: scale(0.97);
+        }
+
+        /* Navigation Buttons */
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+
+            margin-top: 25px;
+        }
+
+        .buttons a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+
+            min-width: 200px;
+
+            padding: 14px 20px;
+
+            border-radius: 10px;
+
+            color: white;
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            transition: all 0.3s ease;
+        }
+
+        /* Home Button */
+
+        .home-btn {
+            background: linear-gradient(
+                135deg,
+                #334155,
+                #475569
+            );
+
+            box-shadow: 0 8px 20px rgba(51, 65, 85, 0.2);
+        }
+
+        .home-btn:hover {
+            transform: translateY(-4px);
+
+            box-shadow: 0 12px 25px rgba(51, 65, 85, 0.35);
+        }
+
+        /* View Employees Button */
+
+        .view-btn {
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #0891b2
+            );
+
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+        }
+
+        .view-btn:hover {
+            transform: translateY(-4px);
+
+            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.35);
+        }
+
+        /* Footer */
+
+        .footer {
+            background: #f1f5f9;
+
+            padding: 22px;
+
+            text-align: center;
+
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer p {
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .footer strong {
+            color: #0f766e;
+        }
+
+        /* Responsive Design */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 19px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            h2 {
+                font-size: 23px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .buttons a {
+                width: 100%;
+            }
+
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+
+        <div class="header">
+
+            <div class="logo">🏢</div>
+
+            <h1>
+                EMPLOYEE MANAGEMENT<br>
+                SYSTEM APPLICATION
+            </h1>
+
+            <p>
+                SMART MANAGEMENT • BETTER ORGANIZATION • GREATER PRODUCTIVITY
+            </p>
+
+        </div>
+
+        <!-- Main Content -->
+
+        <div class="main-content">
+
+            <div class="title-section">
+
+                <div class="badge">
+                    ✦ EMPLOYEE REGISTRATION PORTAL
+                </div>
+
+                <h2>Add New Employee</h2>
+
+                <p class="subtitle">
+                    Register a new employee and maintain
+                    organized employee records in one place.
+                </p>
+
+            </div>
+
+            <!-- Django Registration Form -->
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <input type="submit" value="➕ Add Employee">
+
+            </form>
+
+            <!-- Navigation Buttons -->
+
+            <div class="buttons">
+
+                <a class="home-btn" href="{% url 'home' %}">
+                    🏠 Back To Home
+                </a>
+
+                <a class="view-btn" href="{% url 'getallurl' %}">
+                    📋 View All Employees
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+
+        <div class="footer">
+
+            <p>
+                <strong>Employee Management System</strong>
+            </p>
+
+            <p>
+                Efficient People Management | Organized Records
+            </p>
+
+            <p>
+                © 2026 Employee Management System. All Rights Reserved.
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

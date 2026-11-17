@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>View All Employees</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(8, 145, 178, 0.2), transparent 35%),
+                linear-gradient(135deg, #020617, #0f172a, #172554);
+            min-height: 100vh;
+            padding: 35px 20px;
+            color: #1e293b;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1500px;
+            margin: auto;
+            background: #ffffff;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.7s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f172a, #164e63, #0f766e);
+            padding: 30px 25px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #cbd5e1;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title h2 {
+            color: #0f172a;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .divider {
+            height: 3px;
+            background: linear-gradient(to right, #0d9488, #0891b2, #2563eb);
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 25px;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.07);
+        }
+
+        table {
+            width: 100%;
+            min-width: 1250px;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: linear-gradient(135deg, #0f172a, #164e63);
+            color: white;
+            padding: 16px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        tbody tr:hover {
+            background: #ecfeff;
+            transition: 0.25s ease;
+        }
+
+        .delete-btn,
+        .edit-btn {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 7px;
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            transition: 0.3s ease;
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+        }
+
+        .delete-btn:hover {
+            background: #991b1b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(185, 28, 28, 0.25);
+        }
+
+        .edit-btn {
+            background: linear-gradient(135deg, #0d9488, #0891b2);
+        }
+
+        .edit-btn:hover {
+            background: #0f766e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(13, 148, 136, 0.25);
+        }
+
+        .bottom-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .home-btn,
+        .add-btn {
+            display: inline-block;
+            padding: 12px 22px;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.3s ease;
+        }
+
+        .home-btn {
+            background: linear-gradient(135deg, #334155, #475569);
+        }
+
+        .home-btn:hover {
+            background: #1e293b;
+            transform: translateY(-3px);
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, #0d9488, #0891b2);
+        }
+
+        .add-btn:hover {
+            background: #0f766e;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(13, 148, 136, 0.25);
+        }
+
+        .footer {
+            background: #f1f5f9;
+            text-align: center;
+            padding: 18px;
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .footer strong {
+            color: #0f172a;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px 10px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .header p {
+                font-size: 10px;
+            }
+
+            .content {
+                padding: 20px 12px;
+            }
+
+            .section-title h2 {
+                font-size: 20px;
+            }
+
+            .bottom-buttons {
+                flex-direction: column;
+            }
+
+            .home-btn,
+            .add-btn {
+                text-align: center;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>EMPLOYEE MANAGEMENT SYSTEM APPLICATION</h1>
+            <p>SMART MANAGEMENT • BETTER ORGANIZATION • GREATER PRODUCTIVITY</p>
+        </div>
+
+        <div class="content">
+
+            <div class="section-title">
+                <h2>View All Employee Details</h2>
+                <p>Manage, update and organize your employee records</p>
+            </div>
+
+            <hr class="divider">
+
+            <div class="table-wrapper">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>SALARY</th>
+                            <th>DESIGNATION</th>
+                            <th>PHONE NUMBER</th>
+                            <th>COMPANY NAME</th>
+                            <th>DEPARTMENT</th>
+                            <th>ROLE</th>
+                            <th>GENDER</th>
+                            <th>AGE</th>
+                            <th>DOB</th>
+                            <th>DELETE</th>
+                            <th>EDIT</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for user in users %}
+
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.salary }}</td>
+                            <td>{{ user.designation }}</td>
+                            <td>{{ user.phone_number }}</td>
+                            <td>{{ user.company_name }}</td>
+                            <td>{{ user.department }}</td>
+                            <td>{{ user.role }}</td>
+                            <td>{{ user.gender }}</td>
+                            <td>{{ user.age }}</td>
+                            <td>{{ user.Dob }}</td>
+
+                            <td>
+                                <a class="delete-btn"
+                                   href="{% url 'user_delete' user.id %}"
+                                   onclick="return confirm('Are you sure you want to delete this employee?');">
+                                    Delete
+                                </a>
+                            </td>
+
+                            <td>
+                                <a class="edit-btn"
+                                   href="{% url 'user_update' user.id %}">
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+
+                        {% empty %}
+                        <tr>
+                            <td colspan="13">No employee records found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="bottom-buttons">
+
+                <a class="home-btn" href="{% url 'home' %}">
+                    Back To Home
+                </a>
+
+                <a class="add-btn" href="{% url 'adduser' %}">
+                    + Add New Employee
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <strong>Employee Management System</strong><br>
+            Efficient People Management | Organized Records<br>
+            © 2026 All Rights Reserved
+        </div>
+
+    </div>
+
+</body>
+</html>

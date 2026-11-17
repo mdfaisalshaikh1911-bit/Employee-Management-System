@@ -1,0 +1,446 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Delete Employee | Employee Management System</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(circle at 10% 20%, #164e63 0%, transparent 35%),
+                radial-gradient(circle at 90% 80%, #134e4a 0%, transparent 35%),
+                linear-gradient(135deg, #020617, #0f172a, #172554);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 25px;
+        }
+
+        /* Main Card */
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+
+            background: #ffffff;
+
+            border-radius: 22px;
+            overflow: hidden;
+
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+
+            animation: slideUp 0.7s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header */
+
+        .header {
+            background: linear-gradient(
+                125deg,
+                #0f172a,
+                #164e63,
+                #0f766e
+            );
+
+            padding: 35px 20px;
+
+            text-align: center;
+            color: white;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 15px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 34px;
+
+            background: rgba(255, 255, 255, 0.12);
+
+            border: 1px solid rgba(255,255,255,0.25);
+
+            border-radius: 18px;
+        }
+
+        .header h1 {
+            font-size: 23px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            line-height: 1.5;
+        }
+
+        .header p {
+            color: #bae6fd;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            margin-top: 10px;
+        }
+
+        /* Main Content */
+
+        .main-content {
+            padding: 45px 35px;
+
+            text-align: center;
+        }
+
+        .warning-icon {
+            width: 85px;
+            height: 85px;
+
+            margin: 0 auto 22px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 40px;
+
+            background: #fef2f2;
+            border: 2px solid #fecaca;
+
+            border-radius: 50%;
+        }
+
+        h2 {
+            color: #0f172a;
+            font-size: 28px;
+            font-weight: 800;
+
+            margin-bottom: 15px;
+        }
+
+        .description {
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.8;
+
+            margin-bottom: 25px;
+        }
+
+        /* Employee Details */
+
+        .employee-box {
+            background: #f1f5f9;
+
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid #0d9488;
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            margin-bottom: 25px;
+        }
+
+        .employee-label {
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 600;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            margin-bottom: 8px;
+        }
+
+        .employee-name {
+            color: #0f172a;
+            font-size: 21px;
+            font-weight: 700;
+
+            word-break: break-word;
+        }
+
+        /* Warning message */
+
+        .warning-message {
+            background: #fff7ed;
+
+            border: 1px solid #fed7aa;
+
+            padding: 14px;
+
+            border-radius: 10px;
+
+            color: #9a3412;
+
+            font-size: 13px;
+            line-height: 1.7;
+
+            margin-bottom: 30px;
+        }
+
+        /* Buttons */
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            min-width: 190px;
+
+            padding: 15px 22px;
+
+            border: none;
+            border-radius: 10px;
+
+            color: white;
+
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            transition: all 0.3s ease;
+        }
+
+        /* Delete Button */
+
+        .delete-btn {
+            background: linear-gradient(
+                135deg,
+                #dc2626,
+                #b91c1c
+            );
+
+            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.2);
+        }
+
+        .delete-btn:hover {
+            transform: translateY(-4px);
+
+            box-shadow: 0 12px 25px rgba(220, 38, 38, 0.35);
+        }
+
+        /* Cancel Button */
+
+        .cancel-btn {
+            background: linear-gradient(
+                135deg,
+                #0d9488,
+                #0891b2
+            );
+
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+
+            box-shadow: 0 8px 20px rgba(13, 148, 136, 0.2);
+        }
+
+        .cancel-btn:hover {
+            transform: translateY(-4px);
+
+            box-shadow: 0 12px 25px rgba(13, 148, 136, 0.35);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Footer */
+
+        .footer {
+            background: #f1f5f9;
+
+            padding: 20px;
+
+            text-align: center;
+
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer p {
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .footer strong {
+            color: #0f766e;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 19px;
+            }
+
+            .main-content {
+                padding: 35px 20px;
+            }
+
+            h2 {
+                font-size: 23px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+
+        <div class="header">
+
+            <div class="logo">🏢</div>
+
+            <h1>
+                EMPLOYEE MANAGEMENT<br>
+                SYSTEM APPLICATION
+            </h1>
+
+            <p>
+                SMART MANAGEMENT • BETTER ORGANIZATION • GREATER PRODUCTIVITY
+            </p>
+
+        </div>
+
+        <!-- Main Content -->
+
+        <div class="main-content">
+
+            <div class="warning-icon">
+                🗑️
+            </div>
+
+            <h2>Delete Employee?</h2>
+
+            <p class="description">
+                Are you sure you want to delete this employee
+                from the Employee Management System?
+            </p>
+
+            <!-- Employee Details -->
+
+            <div class="employee-box">
+
+                <div class="employee-label">
+                    Employee Name
+                </div>
+
+                <div class="employee-name">
+                    {{ user.name }}
+                </div>
+
+            </div>
+
+            <!-- Warning -->
+
+            <div class="warning-message">
+                ⚠️ <strong>Important:</strong>
+                This action will permanently remove the employee
+                record from the system and cannot be undone.
+            </div>
+
+            <!-- Action Buttons -->
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="buttons">
+
+                    <button type="submit" class="btn delete-btn">
+                        🗑️ Yes, Delete Employee
+                    </button>
+
+                    <a href="{% url 'getallurl' %}"
+                       class="btn cancel-btn">
+                        ↩ Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <!-- Footer -->
+
+        <div class="footer">
+
+            <p>
+                <strong>Employee Management System</strong>
+            </p>
+
+            <p>
+                Efficient People Management | Organized Records
+            </p>
+
+            <p>
+                © 2026 Employee Management System. All Rights Reserved.
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

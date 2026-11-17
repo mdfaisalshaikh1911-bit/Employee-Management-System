@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Management System</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #0f1b3d;
+            --navy-deep: #0a1229;
+            --navy-soft: #1c2b5a;
+            --pink: #ff2e93;
+            --pink-soft: #ff7ab8;
+            --white: #ffffff;
+            --mist: #f5f7fc;
+            --muted: #6b7694;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 20% 20%, #1c2b5a 0%, transparent 45%),
+                radial-gradient(circle at 80% 80%, #2a1245 0%, transparent 45%),
+                var(--navy-deep);
+            padding: 35px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--navy);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Subtle dot-grid texture */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+            background-size: 26px 26px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Floating pink glow orbs */
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+            pointer-events: none;
+            animation: float 11s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 360px;
+            height: 360px;
+            background: var(--pink);
+            opacity: 0.35;
+            top: -110px;
+            left: -110px;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: #3b4fd8;
+            opacity: 0.4;
+            bottom: -130px;
+            right: -110px;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50%      { transform: translate(40px, 30px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1000px;
+            background: var(--white);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.15),
+                0 35px 90px rgba(0, 0, 0, 0.55),
+                0 0 60px rgba(255, 46, 147, 0.15);
+            animation: slideUp 0.9s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(35px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header */
+
+        .header {
+            position: relative;
+            background: linear-gradient(145deg, var(--navy) 0%, var(--navy-soft) 100%);
+            padding: 50px 25px 55px;
+            text-align: center;
+            color: var(--white);
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 46, 147, 0.35);
+            top: -130px;
+            right: -70px;
+        }
+
+        .header::after {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 46, 147, 0.35), transparent 70%);
+            bottom: -90px;
+            left: -40px;
+        }
+
+        .logo {
+            position: relative;
+            z-index: 1;
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--pink);
+            border-radius: 26px;
+            box-shadow: 0 0 25px rgba(255, 46, 147, 0.45), inset 0 0 20px rgba(255, 46, 147, 0.12);
+            animation: bob 3s ease-in-out infinite;
+        }
+
+        @keyframes bob {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-8px); }
+        }
+
+        h1 {
+            position: relative;
+            z-index: 1;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+
+        .header-line {
+            position: relative;
+            z-index: 1;
+            width: 70px;
+            height: 4px;
+            margin: 0 auto 16px;
+            border-radius: 10px;
+            background: var(--pink);
+            box-shadow: 0 0 14px var(--pink);
+        }
+
+        .header p {
+            position: relative;
+            z-index: 1;
+            color: #c7cfe8;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        /* Main Content */
+
+        .main-content {
+            padding: 55px 35px 60px;
+            text-align: center;
+            background: var(--white);
+        }
+
+        .welcome-label {
+            display: inline-block;
+            background: #fff0f7;
+            color: var(--pink);
+            padding: 9px 22px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            margin-bottom: 24px;
+            border: 1px solid #ffc2de;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: var(--navy);
+            line-height: 1.3;
+        }
+
+        h2 span {
+            color: var(--pink);
+        }
+
+        .description {
+            max-width: 620px;
+            margin: 0 auto 42px;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.9;
+        }
+
+        /* Buttons */
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            position: relative;
+            display: inline-block;
+            min-width: 250px;
+            padding: 17px 28px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-radius: 50px;
+            overflow: hidden;
+            transition: all 0.35s ease;
+        }
+
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -80%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.6s ease;
+        }
+
+        .btn:hover::after {
+            left: 130%;
+        }
+
+        .add-btn {
+            color: var(--white);
+            background: linear-gradient(135deg, var(--pink), #ff5fae);
+            box-shadow: 0 10px 28px rgba(255, 46, 147, 0.4);
+        }
+
+        .add-btn:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 18px 38px rgba(255, 46, 147, 0.55);
+        }
+
+        .view-btn {
+            color: var(--white);
+            background: var(--navy);
+            border: 2px solid var(--navy);
+            box-shadow: 0 10px 28px rgba(15, 27, 61, 0.3);
+        }
+
+        .view-btn:hover {
+            transform: translateY(-5px) scale(1.03);
+            background: var(--navy-soft);
+            border-color: var(--pink);
+            box-shadow: 0 18px 38px rgba(15, 27, 61, 0.45), 0 0 0 3px rgba(255, 46, 147, 0.25);
+        }
+
+        /* Footer */
+
+        .footer {
+            background: var(--navy);
+            text-align: center;
+            padding: 26px 24px;
+            border-top: 3px solid var(--pink);
+        }
+
+        .footer p {
+            color: #aeb8d9;
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .footer strong {
+            color: var(--white);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 700px) {
+            body {
+                padding: 15px 10px;
+            }
+
+            .header {
+                padding: 38px 18px 42px;
+            }
+
+            h1 {
+                font-size: 22px;
+                letter-spacing: 2px;
+            }
+
+            h2 {
+                font-size: 26px;
+            }
+
+            .main-content {
+                padding: 38px 18px 42px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="container">
+
+        <!-- Header -->
+
+        <div class="header">
+
+            <div class="logo">🏢</div>
+
+            <h1>EMPLOYEE MANAGEMENT<br>
+                SYSTEM APPLICATION
+            </h1>
+
+            <div class="header-line"></div>
+
+            <p>SMART MANAGEMENT • BETTER ORGANIZATION • GREATER PRODUCTIVITY</p>
+
+        </div>
+
+        <!-- Main Content -->
+
+        <div class="main-content">
+
+            <div class="welcome-label">
+                ✨ WELCOME TO YOUR EMPLOYEE PORTAL
+            </div>
+
+            <h2>Manage Your <span>Workforce</span> Smarter</h2>
+
+            <p class="description">
+                Welcome to our Employee Management System.
+                Organize employee information, manage employee records,
+                and simplify your daily administrative tasks
+                through one convenient platform.
+            </p>
+
+            <div class="buttons">
+
+                <a href="{% url 'adduser' %}" class="btn add-btn">
+                    ➕ &nbsp; Add New Employee
+                </a>
+
+                <a href="{% url 'getallurl' %}" class="btn view-btn">
+                    📊 &nbsp; View All Employees
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+
+        <div class="footer">
+
+            <p>
+                <strong>Employee Management System</strong>
+            </p>
+
+            <p>
+                Efficient People Management | Organized Records | Better Productivity
+            </p>
+
+            <p>© 2026 Employee Management System. All Rights Reserved.</p>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
